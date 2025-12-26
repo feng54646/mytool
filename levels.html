@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPet - 关卡挑战</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 关卡页面专用样式 */
+        .levels-page .container {
+            padding-bottom: 80px;
+        }
+
+        .level-category {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FF6B6B, #FFD166);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .category-title h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+
+        .category-title p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .level-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .level-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .level-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .level-icon {
+            font-size: 24px;
+            color: #FF6B6B;
+            margin-bottom: 8px;
+        }
+
+        .level-name {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .level-duration {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .level-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #4ECDC4;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .level-progress {
+            margin-top: 10px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD166, #FF6B6B);
+            border-radius: 2px;
+        }
+
+        .current-level {
+            background: white;
+            border: 2px solid #667eea;
+            box-shadow: 0 0 20px rgba(102,126,234,0.2);
+        }
+
+        .level-details-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            display: none;
+        }
+
+        .level-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .level-modal-header {
+            margin-bottom: 25px;
+        }
+
+        .level-modal-icon {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .level-requirements {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .requirement-item.completed {
+            color: #4ECDC4;
+        }
+    </style>
+</head>
+<body class="levels-page">
+<div class="container">
+    <!-- 顶部标题 -->
+    <header class="page-header">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <h2><i class="fas fa-map"></i> 关卡挑战</h2>
+        <div class="header-stats">
+            <div class="stat-item">
+                <i class="fas fa-trophy"></i>
+                <span id="completedLevels">5</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 用户进度 -->
+    <section class="user-progress">
+        <div class="progress-summary">
+            <div class="progress-circle">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#f0f0f0" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#4ECDC4" stroke-width="8"
+                            stroke-dasharray="283" stroke-dashoffset="113" transform="rotate(-90 50 50)"/>
+                </svg>
+                <div class="progress-text">
+                    <span class="progress-percent">60%</span>
+                </div>
+            </div>
+            <div class="progress-info">
+                <h3>关卡进度</h3>
+                <p>已完成 <span class="highlight">5/15</span> 个关卡</p>
+                <p>当前等级：<span class="highlight">健身达人</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新手入门关卡 -->
+    <section class="level-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <div class="category-title">
+                <h3>新手入门</h3>
+                <p>适合健身新手的简单关卡</p>
+            </div>
+        </div>
+
+        <div class="levels-grid">
+            <!-- 关卡 1 -->
+            <div class="level-card current-level" onclick="showLevelDetails(1)">
+                <div class="level-number">1</div>
+                <div class="level-icon"><i class="fas fa-sun"></i></div>
+                <div class="level-name">晨间唤醒</div>
+                <div class="level-duration">3分钟</div>
+                <div class="level-badge">进行中</div>
+                <div class="level-progress">
+                    <div class="level-progress-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <!-- 关卡 2 -->
+            <div class="level-card" onclick="showLevelDetails(2)">
+                <div class="level-number">2</div>
+                <div class="level-icon"><i class="fas fa-walking"></i></div>
+                <div class="level-name">基础拉伸</div>
+                <div class="level-duration">5分钟</div>
+                <div class="level-progress">
+                    <div class="level-progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- 关卡 3 -->
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">3</div>
+                <div class="level-icon"><i class="fas fa-heart"></i></div>
+                <div class="level-name">心肺激活</div>
+                <div class="level-duration">8分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.2</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 中级提升关卡 -->
+    <section class="level-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="category-title">
+                <h3>中级提升</h3>
+                <p>提高运动强度和难度</p>
+            </div>
+        </div>
+
+        <div class="levels-grid">
+            <!-- 关卡 4-6 -->
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">4</div>
+                <div class="level-icon"><i class="fas fa-dumbbell"></i></div>
+                <div class="level-name">力量训练</div>
+                <div class="level-duration">10分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.3</span>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">5</div>
+                <div class="level-icon"><i class="fas fa-running"></i></div>
+                <div class="level-name">有氧燃脂</div>
+                <div class="level-duration">12分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.4</span>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">6</div>
+                <div class="level-icon"><i class="fas fa-balance-scale"></i></div>
+                <div class="level-name">平衡训练</div>
+                <div class="level-duration">8分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.5</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 高级挑战关卡 -->
+    <section class="level-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-fire"></i>
+            </div>
+            <div class="category-title">
+                <h3>高级挑战</h3>
+                <p>专业级健身挑战</p>
+            </div>
+        </div>
+
+        <div class="levels-grid">
+            <!-- 关卡 7-9 -->
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">7</div>
+                <div class="level-icon"><i class="fas fa-mountain"></i></div>
+                <div class="level-name">耐力挑战</div>
+                <div class="level-duration">15分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.6</span>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">8</div>
+                <div class="level-icon"><i class="fas fa-bolt"></i></div>
+                <div class="level-name">爆发力训练</div>
+                <div class="level-duration">10分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.7</span>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">9</div>
+                <div class="level-icon"><i class="fas fa-infinity"></i></div>
+                <div class="level-name">循环训练</div>
+                <div class="level-duration">20分钟</div>
+                <span class="level-badge" style="background: #999;">Lv.8</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特别活动关卡 -->
+    <section class="level-category">
+        <div class="category-header">
+            <div class="category-icon">
+                <i class="fas fa-gift"></i>
+            </div>
+            <div class="category-title">
+                <h3>特别活动</h3>
+                <p>限时挑战和主题活动</p>
+            </div>
+        </div>
+
+        <div class="levels-grid">
+            <div class="level-card" onclick="showLevelDetails(10)" style="background: linear-gradient(135deg, #FFD166, #FF6B6B); color: white;">
+                <div class="level-number">★</div>
+                <div class="level-icon"><i class="fas fa-hands-helping"></i></div>
+                <div class="level-name">公益挑战</div>
+                <div class="level-duration">任意时长</div>
+                <div class="level-badge" style="background: #4ECDC4;">进行中</div>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">?</div>
+                <div class="level-icon"><i class="fas fa-question"></i></div>
+                <div class="level-name">神秘关卡</div>
+                <div class="level-duration">未知</div>
+            </div>
+
+            <div class="level-card locked" onclick="showLockedLevel()">
+                <div class="level-number">!</div>
+                <div class="level-icon"><i class="fas fa-exclamation"></i></div>
+                <div class="level-name">即将到来</div>
+                <div class="level-duration">敬请期待</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关卡详情模态框 -->
+    <div id="levelDetailsModal" class="level-details-modal">
+        <div class="level-modal-content">
+            <div class="level-modal-header">
+                <div class="level-modal-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <h3>晨间唤醒</h3>
+                <p>关卡 1 · 3分钟</p>
+            </div>
+
+            <div class="level-requirements">
+                <h4>解锁要求</h4>
+                <div class="requirement-item completed">
+                    <i class="fas fa-check-circle"></i>
+                    <span>完成新手引导</span>
+                </div>
+                <div class="requirement-item completed">
+                    <i class="fas fa-check-circle"></i>
+                    <span>连续打卡3天</span>
+                </div>
+                <div class="requirement-item">
+                    <i class="far fa-circle"></i>
+                    <span>宠物等级达到2级</span>
+                </div>
+            </div>
+
+            <div class="level-rewards">
+                <h4>关卡奖励</h4>
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 15px 0;">
+                    <div class="reward-item">
+                        <i class="fas fa-coins" style="color: #FFD166; font-size: 24px;"></i>
+                        <div>+10 金币</div>
+                    </div>
+                    <div class="reward-item">
+                        <i class="fas fa-gem" style="color: #4ECDC4; font-size: 24px;"></i>
+                        <div>晨间之星徽章</div>
+                    </div>
+                    <div class="reward-item">
+                        <i class="fas fa-hands-helping" style="color: #FF6B6B; font-size: 24px;"></i>
+                        <div>+0.02元捐赠</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="btn-secondary" onclick="closeLevelDetails()" style="flex: 1;">
+                    稍后再说
+                </button>
+                <button class="btn-primary" onclick="startLevel()" style="flex: 1;">
+                    <i class="fas fa-play"></i> 开始挑战
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部导航 -->
+<nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="levels.html" class="nav-item active">
+        <i class="fas fa-map"></i>
+        <span>关卡</span>
+    </a>
+    <a href="achievements.html" class="nav-item">
+        <i class="fas fa-trophy"></i>
+        <span>成就</span>
+    </a>
+    <a href="pet-feedback.html" class="nav-item">
+        <i class="fas fa-paw"></i>
+        <span>宠物</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+
+<script>
+    // 关卡数据
+    const levelsData = {
+        1: {
+            id: 1,
+            name: "晨间唤醒",
+            duration: "3分钟",
+            icon: "fa-sun",
+            description: "简单的晨间拉伸，唤醒身体活力",
+            requirements: [
+                { text: "完成新手引导", completed: true },
+                { text: "连续打卡3天", completed: true },
+                { text: "宠物等级达到2级", completed: false }
+            ],
+            rewards: {
+                coins: 10,
+                badge: "晨间之星",
+                donation: 0.02
+            },
+            unlocked: true,
+            progress: 70
+        }
+    };
+
+    // 显示关卡详情
+    function showLevelDetails(levelId) {
+        const level = levelsData[levelId];
+        if (!level || !level.unlocked) return;
+
+        const modal = document.getElementById('levelDetailsModal');
+        const modalContent = modal.querySelector('.level-modal-content');
+
+        // 更新模态框内容
+        modalContent.querySelector('.level-modal-icon i').className = `fas ${level.icon}`;
+        modalContent.querySelector('h3').textContent = level.name;
+        modalContent.querySelector('p').textContent = `关卡 ${levelId} · ${level.duration}`;
+
+        // 更新要求
+        const requirementsContainer = modalContent.querySelector('.level-requirements');
+        requirementsContainer.innerHTML = `
+            <h4>解锁要求</h4>
+            ${level.requirements.map(req => `
+                <div class="requirement-item ${req.completed ? 'completed' : ''}">
+                    <i class="fas ${req.completed ? 'fa-check-circle' : 'fa-circle'}"></i>
+                    <span>${req.text}</span>
+                </div>
+            `).join('')}
+        `;
+
+        // 显示模态框
+        modal.style.display = 'flex';
+    }
+
+    // 关闭关卡详情
+    function closeLevelDetails() {
+        document.getElementById('levelDetailsModal').style.display = 'none';
+    }
+
+    // 开始关卡
+    function startLevel() {
+        closeLevelDetails();
+        alert('开始挑战！将跳转到训练页面...');
+        // 这里可以跳转到具体的训练页面
+        // window.location.href = 'workout.html?level=1';
+    }
+
+    // 显示锁定关卡提示
+    function showLockedLevel() {
+        alert('🔒 这个关卡还未解锁！\n\n继续锻炼，提升等级来解锁更多关卡吧！');
+    }
+
+    // 页面加载时初始化
+    window.addEventListener('load', function() {
+        // 更新已完成的关卡数
+        const completedLevels = Object.values(levelsData).filter(level => level.progress >= 100).length;
+        document.getElementById('completedLevels').textContent = completedLevels;
+
+        // 点击模态框外部关闭
+        document.getElementById('levelDetailsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLevelDetails();
+            }
+        });
+    });
+
+    // 添加按钮样式
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #5569d1;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .reward-item {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        .page-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-progress {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .progress-summary {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .progress-circle {
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percent {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>

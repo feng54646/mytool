@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPet - 我的成就</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 成就页面专用样式 */
+        .achievements-page .container {
+            padding-bottom: 80px;
+        }
+
+        .achievements-header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .achievements-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-circle {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .achievement-category {
+            margin-bottom: 25px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .category-title i {
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .achievement-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .achievement-card.unlocked {
+            background: white;
+            border: 2px solid #4ECDC4;
+        }
+
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+            position: relative;
+        }
+
+        .icon-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .achievement-card.unlocked .icon-bg {
+            background: linear-gradient(135deg, #FFD166, #FF6B6B);
+            color: white;
+        }
+
+        .achievement-card.locked .icon-bg {
+            background: #e0e0e0;
+            color: #999;
+        }
+
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .achievement-desc {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 10px;
+            min-height: 32px;
+        }
+
+        .achievement-date {
+            font-size: 10px;
+            color: #999;
+        }
+
+        .achievement-points {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FFD166;
+            color: #333;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .badge-count {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: #FF6B6B;
+            color: white;
+            font-size: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-text {
+            font-size: 10px;
+            color: #4ECDC4;
+            margin-top: 5px;
+        }
+
+        .achievement-details-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            display: none;
+        }
+
+        .achievement-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-achievement-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .modal-achievement-icon.unlocked {
+            color: #FFD166;
+        }
+
+        .modal-achievement-icon.locked {
+            color: #e0e0e0;
+        }
+
+        .share-achievement {
+            background: #f0f0f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .share-achievement:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body class="achievements-page">
+<div class="container">
+    <!-- 顶部标题 -->
+    <header class="page-header">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <h2><i class="fas fa-trophy"></i> 我的成就</h2>
+        <div class="header-stats">
+            <div class="stat-item">
+                <i class="fas fa-star"></i>
+                <span id="totalPoints">120</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 成就概览 -->
+    <section class="achievements-header">
+        <h3>成就殿堂</h3>
+        <p>记录你的每一次进步</p>
+
+        <div class="achievements-stats">
+            <div class="stat-circle">
+                <div class="stat-number" id="unlockedCount">8</div>
+                <div class="stat-label">已解锁</div>
+            </div>
+            <div class="stat-circle">
+                <div class="stat-number" id="totalCount">20</div>
+                <div class="stat-label">总成就</div>
+            </div>
+            <div class="stat-circle">
+                <div class="stat-number" id="completionRate">40%</div>
+                <div class="stat-label">完成度</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 运动成就 -->
+    <section class="achievement-category">
+        <div class="category-title">
+            <i class="fas fa-running"></i>
+            <h3>运动达人</h3>
+        </div>
+
+        <div class="achievements-grid">
+            <!-- 成就 1 -->
+            <div class="achievement-card unlocked" onclick="showAchievementDetails(1)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">初次见面</div>
+                <div class="achievement-desc">完成第一次运动</div>
+                <div class="achievement-date">2023-10-22</div>
+                <div class="achievement-points">+10</div>
+                <div class="badge-count">1</div>
+            </div>
+
+            <!-- 成就 2 -->
+            <div class="achievement-card unlocked" onclick="showAchievementDetails(2)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">坚持三天</div>
+                <div class="achievement-desc">连续打卡3天</div>
+                <div class="achievement-date">2023-10-24</div>
+                <div class="achievement-points">+20</div>
+                <div class="badge-count">2</div>
+            </div>
+
+            <!-- 成就 3 -->
+            <div class="achievement-card" onclick="showAchievementDetails(3)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">热情似火</div>
+                <div class="achievement-desc">连续打卡7天</div>
+                <div class="achievement-desc">
+                    <div class="progress-text">当前: 3/7天</div>
+                </div>
+                <div class="achievement-points">+30</div>
+            </div>
+
+            <!-- 成就 4 -->
+            <div class="achievement-card" onclick="showAchievementDetails(4)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">力量觉醒</div>
+                <div class="achievement-desc">完成10次力量训练</div>
+                <div class="achievement-points">+40</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 宠物成就 -->
+    <section class="achievement-category">
+        <div class="category-title">
+            <i class="fas fa-paw"></i>
+            <h3>宠物伙伴</h3>
+        </div>
+
+        <div class="achievements-grid">
+            <!-- 成就 5 -->
+            <div class="achievement-card unlocked" onclick="showAchievementDetails(5)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-level-up-alt"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">宠物升级</div>
+                <div class="achievement-desc">宠物升到第2级</div>
+                <div class="achievement-date">2023-10-23</div>
+                <div class="achievement-points">+15</div>
+                <div class="badge-count">3</div>
+            </div>
+
+            <!-- 成就 6 -->
+            <div class="achievement-card" onclick="showAchievementDetails(6)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">时尚达人</div>
+                <div class="achievement-desc">解锁5件宠物装扮</div>
+                <div class="achievement-desc">
+                    <div class="progress-text">当前: 2/5件</div>
+                </div>
+                <div class="achievement-points">+25</div>
+            </div>
+
+            <!-- 成就 7 -->
+            <div class="achievement-card" onclick="showAchievementDetails(7)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">亲密无间</div>
+                <div class="achievement-desc">与宠物互动100次</div>
+                <div class="achievement-points">+35</div>
+            </div>
+
+            <!-- 成就 8 -->
+            <div class="achievement-card" onclick="showAchievementDetails(8)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">宠物之王</div>
+                <div class="achievement-desc">宠物达到10级</div>
+                <div class="achievement-points">+50</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公益成就 -->
+    <section class="achievement-category">
+        <div class="category-title">
+            <i class="fas fa-hands-helping"></i>
+            <h3>公益之星</h3>
+        </div>
+
+        <div class="achievements-grid">
+            <!-- 成就 9 -->
+            <div class="achievement-card unlocked" onclick="showAchievementDetails(9)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">公益使者</div>
+                <div class="achievement-desc">累计捐赠超过10元</div>
+                <div class="achievement-date">2023-10-25</div>
+                <div class="achievement-points">+30</div>
+                <div class="badge-count">4</div>
+            </div>
+
+            <!-- 成就 10 -->
+            <div class="achievement-card" onclick="showAchievementDetails(10)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">爱心传播</div>
+                <div class="achievement-desc">邀请3位好友参与公益</div>
+                <div class="achievement-points">+40</div>
+            </div>
+
+            <!-- 成就 11 -->
+            <div class="achievement-card" onclick="showAchievementDetails(11)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-award"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">公益先锋</div>
+                <div class="achievement-desc">累计捐赠超过100元</div>
+                <div class="achievement-points">+100</div>
+            </div>
+
+            <!-- 成就 12 -->
+            <div class="achievement-card" onclick="showAchievementDetails(12)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">全球公益</div>
+                <div class="achievement-desc">参与5个公益项目</div>
+                <div class="achievement-points">+80</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 挑战成就 -->
+    <section class="achievement-category">
+        <div class="category-title">
+            <i class="fas fa-flag-checkered"></i>
+            <h3>挑战之王</h3>
+        </div>
+
+        <div class="achievements-grid">
+            <!-- 成就 13 -->
+            <div class="achievement-card" onclick="showAchievementDetails(13)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">关卡先锋</div>
+                <div class="achievement-desc">通关5个关卡</div>
+                <div class="achievement-desc">
+                    <div class="progress-text">当前: 1/5关</div>
+                </div>
+                <div class="achievement-points">+25</div>
+            </div>
+
+            <!-- 成就 14 -->
+            <div class="achievement-card" onclick="showAchievementDetails(14)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">速度之星</div>
+                <div class="achievement-desc">3分钟内完成晨间训练</div>
+                <div class="achievement-points">+20</div>
+            </div>
+
+            <!-- 成就 15 -->
+            <div class="achievement-card" onclick="showAchievementDetails(15)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">耐力王者</div>
+                <div class="achievement-desc">完成30分钟连续训练</div>
+                <div class="achievement-points">+45</div>
+            </div>
+
+            <!-- 成就 16 -->
+            <div class="achievement-card" onclick="showAchievementDetails(16)">
+                <div class="achievement-icon">
+                    <div class="icon-bg">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                </div>
+                <div class="achievement-name">全能冠军</div>
+                <div class="achievement-desc">解锁所有类型成就</div>
+                <div class="achievement-points">+200</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成就详情模态框 -->
+    <div id="achievementDetailsModal" class="achievement-details-modal">
+        <div class="achievement-modal-content">
+            <div class="modal-achievement-icon unlocked">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3 id="modalAchievementName">初次见面</h3>
+            <p id="modalAchievementDesc">完成第一次运动</p>
+
+            <div style="margin: 20px 0;">
+                <div style="display: flex; justify-content: center; gap: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; color: #FFD166; font-weight: bold;" id="modalPoints">+10</div>
+                        <div style="font-size: 12px; color: #666;">成就点数</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; color: #4ECDC4; font-weight: bold;" id="modalDate">2023-10-22</div>
+                        <div style="font-size: 12px; color: #666;">解锁日期</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin: 20px 0; text-align: left;">
+                <h4 style="margin: 0 0 10px 0;">成就说明</h4>
+                <p style="margin: 0; font-size: 14px; color: #666;" id="modalDetail">欢迎来到FitPet！这是你健身之旅的第一步。继续坚持，解锁更多成就吧！</p>
+            </div>
+
+            <div class="share-achievement" onclick="shareAchievement()">
+                <i class="fas fa-share-alt"></i> 分享这个成就
+            </div>
+
+            <button class="btn-primary" onclick="closeAchievementDetails()" style="width: 100%;">
+                知道了
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 底部导航 -->
+<nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="levels.html" class="nav-item">
+        <i class="fas fa-map"></i>
+        <span>关卡</span>
+    </a>
+    <a href="achievements.html" class="nav-item active">
+        <i class="fas fa-trophy"></i>
+        <span>成就</span>
+    </a>
+    <a href="pet-feedback.html" class="nav-item">
+        <i class="fas fa-paw"></i>
+        <span>宠物</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+
+<script>
+    // 成就数据
+    const achievementsData = {
+        1: {
+            id: 1,
+            name: "初次见面",
+            description: "完成第一次运动",
+            detail: "欢迎来到FitPet！这是你健身之旅的第一步。继续坚持，解锁更多成就吧！",
+            points: 10,
+            date: "2023-10-22",
+            category: "运动",
+            unlocked: true,
+            icon: "fa-handshake"
+        },
+        2: {
+            id: 2,
+            name: "坚持三天",
+            description: "连续打卡3天",
+            detail: "良好的开始是成功的一半！连续打卡说明你已经开始养成运动习惯了。",
+            points: 20,
+            date: "2023-10-24",
+            category: "运动",
+            unlocked: true,
+            icon: "fa-calendar-check"
+        },
+        5: {
+            id: 5,
+            name: "宠物升级",
+            description: "宠物升到第2级",
+            detail: "你的宠物正在成长！随着你的运动，它会变得更健康、更快乐。",
+            points: 15,
+            date: "2023-10-23",
+            category: "宠物",
+            unlocked: true,
+            icon: "fa-level-up-alt"
+        },
+        9: {
+            id: 9,
+            name: "公益使者",
+            description: "累计捐赠超过10元",
+            detail: "你的每一次运动都在帮助他人！感谢你为公益事业做出的贡献。",
+            points: 30,
+            date: "2023-10-25",
+            category: "公益",
+            unlocked: true,
+            icon: "fa-hands"
+        }
+    };
+
+    // 更新成就统计
+    function updateAchievementStats() {
+        const allAchievements = Object.values(achievementsData);
+        const unlocked = allAchievements.filter(a => a.unlocked);
+
+        document.getElementById('unlockedCount').textContent = unlocked.length;
+        document.getElementById('totalCount').textContent = allAchievements.length;
+        document.getElementById('completionRate').textContent =
+            Math.round((unlocked.length / allAchievements.length) * 100) + '%';
+
+        // 计算总点数
+        const totalPoints = unlocked.reduce((sum, a) => sum + a.points, 0);
+        document.getElementById('totalPoints').textContent = totalPoints;
+    }
+
+    // 显示成就详情
+    function showAchievementDetails(achievementId) {
+        const achievement = achievementsData[achievementId];
+        if (!achievement) return;
+
+        const modal = document.getElementById('achievementDetailsModal');
+
+        // 更新模态框内容
+        document.getElementById('modalAchievementName').textContent = achievement.name;
+        document.getElementById('modalAchievementDesc').textContent = achievement.description;
+        document.getElementById('modalPoints').textContent = `+${achievement.points}`;
+        document.getElementById('modalDate').textContent = achievement.unlocked ? achievement.date : '未解锁';
+        document.getElementById('modalDetail').textContent = achievement.detail;
+
+        // 更新图标
+        const iconElement = modal.querySelector('.modal-achievement-icon i');
+        iconElement.className = `fas ${achievement.icon}`;
+
+        // 更新图标样式
+        const iconContainer = modal.querySelector('.modal-achievement-icon');
+        iconContainer.className = `modal-achievement-icon ${achievement.unlocked ? 'unlocked' : 'locked'}`;
+
+        // 显示模态框
+        modal.style.display = 'flex';
+    }
+
+    // 关闭成就详情
+    function closeAchievementDetails() {
+        document.getElementById('achievementDetailsModal').style.display = 'none';
+    }
+
+    // 分享成就
+    function shareAchievement() {
+        const name = document.getElementById('modalAchievementName').textContent;
+        alert(`分享成就 "${name}" 到社交媒体！\n\n（模拟分享功能）`);
+        // 实际应用中这里可以调用社交分享API
+    }
+
+    // 页面加载时初始化
+    window.addEventListener('load', function() {
+        updateAchievementStats();
+
+        // 点击模态框外部关闭
+        document.getElementById('achievementDetailsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAchievementDetails();
+            }
+        });
+    });
+
+    // 添加按钮样式
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        .page-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>
