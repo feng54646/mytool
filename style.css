@@ -1,0 +1,1338 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* 登录页面样式 */
+.login-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-page .container {
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-section {
+    margin-bottom: 40px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.pet-logo {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #FFD166 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 48px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+}
+
+h1 {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.tagline {
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+.login-box {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.login-box h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.login-btn.wechat {
+    background: #07C160;
+    color: white;
+}
+
+.login-btn.qq {
+    background: #12B7F5;
+    color: white;
+}
+
+.login-btn.demo {
+    background: #FF6B6B;
+    color: white;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.feature i {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.agreement {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+
+.agreement a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.stat {
+    text-align: center;
+}
+
+.number {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+}
+
+/* 问卷页面样式 */
+.questionnaire-page {
+    background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+}
+
+.questionnaire-page .container {
+    background: transparent;
+    box-shadow: none;
+}
+
+.questionnaire-header {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFD166);
+    width: 12.5%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.questionnaire-content {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.question-card {
+    margin-bottom: 30px;
+}
+
+.question-number {
+    color: #FF6B6B;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.question-text {
+    font-size: 22px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.option {
+    padding: 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.option:hover {
+    border-color: #FFD166;
+    background: #FFF9E6;
+}
+
+.option.selected {
+    border-color: #FF6B6B;
+    background: #FFE6E6;
+}
+
+.option-icon {
+    width: 36px;
+    height: 36px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #666;
+}
+
+.option.selected .option-icon {
+    background: #FF6B6B;
+    color: white;
+}
+
+.option-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.check-icon {
+    color: #FF6B6B;
+    font-size: 18px;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.nav-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-btn.prev {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.nav-btn.next {
+    background: #4ECDC4;
+    color: white;
+}
+
+.nav-btn.submit {
+    background: #FF6B6B;
+    color: white;
+}
+
+.questionnaire-info {
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4ECDC4;
+}
+
+.loading-container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.loading-spinner {
+    font-size: 48px;
+    color: #FF6B6B;
+    margin-bottom: 20px;
+}
+
+.planning-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: #FFD166;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 主页样式 */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 25px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #FF6B6B, #FFD166);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.user-details h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.user-level {
+    font-size: 12px;
+    color: #999;
+}
+
+.header-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.stat-item i {
+    color: #FF6B6B;
+}
+
+.pet-section {
+    background: linear-gradient(135deg, #FFE6E6, #FFF9E6);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pet-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.pet-display {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.pet-body {
+    width: 80px;
+    height: 80px;
+    background: #FFD166;
+    border-radius: 50%;
+    position: relative;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.pet-head {
+    width: 60px;
+    height: 40px;
+    background: #FFD166;
+    border-radius: 50%;
+    position: absolute;
+    top: -20px;
+    left: 10px;
+}
+
+.pet-eye {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+    top: 15px;
+}
+
+.pet-eye.left {
+    left: 15px;
+}
+
+.pet-eye.right {
+    right: 15px;
+}
+
+.pet-mouth {
+    position: absolute;
+    width: 20px;
+    height: 8px;
+    background: #FF6B6B;
+    border-radius: 4px;
+    bottom: 10px;
+    left: 20px;
+}
+
+.pet-accessory {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 24px;
+    color: #667eea;
+}
+
+.pet-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.pet-level {
+    margin-bottom: 10px;
+}
+
+.level-bar {
+    width: 150px;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.level-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFD166);
+}
+
+.pet-mood {
+    color: #4ECDC4;
+    font-weight: bold;
+}
+
+.pet-interact-btn {
+    width: 100%;
+    padding: 12px;
+    background: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.pet-interact-btn:hover {
+    background: #FF5252;
+}
+
+.task-section {
+    margin-bottom: 30px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+}
+
+.task-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.task-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+}
+
+.task-header {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.task-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.task-details h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.task-desc {
+    opacity: 0.9;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.task-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.task-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.task-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD166, #FF6B6B);
+    transition: width 0.5s ease;
+}
+
+.task-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-start, .btn-skip {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-start {
+    background: #FFD166;
+    color: #333;
+}
+
+.btn-start:hover {
+    background: #FFC745;
+}
+
+.btn-start.completed {
+    background: #4ECDC4;
+    color: white;
+}
+
+.btn-skip {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* 模态框样式 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+}
+
+.task-timer {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.timer-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.exercise-demo {
+    margin-top: 20px;
+}
+
+.exercise-gif {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+    animation: stretch 2s ease-in-out infinite;
+}
+
+@keyframes stretch {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.2); }
+}
+
+.exercise-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-instructions {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.modal-instructions h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.modal-instructions ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.modal-instructions li {
+    padding: 5px 0;
+    position: relative;
+    padding-left: 20px;
+}
+
+.modal-instructions li:before {
+    content: "•";
+    color: #4ECDC4;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-pause, .btn-complete {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-pause {
+    background: #FFD166;
+    color: #333;
+}
+
+.btn-complete {
+    background: #4ECDC4;
+    color: white;
+}
+
+/* 底部导航 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    padding: 10px 20px;
+    z-index: 100;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #999;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.nav-item.active {
+    color: #667eea;
+    background: #f0f0ff;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    font-size: 12px;
+}
+
+/* 反馈页面样式 */
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+.placeholder {
+    width: 40px;
+}
+
+.celebration-section {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #FF6B6B;
+    border-radius: 2px;
+    animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(500px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.celebration-message h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.celebration-text {
+    color: #666;
+    font-size: 16px;
+}
+
+.pet-upgrade {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.pet-before, .pet-after {
+    text-align: center;
+}
+
+.pet-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #FFD166, #FF6B6B);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: white;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.pet-avatar.old {
+    opacity: 0.7;
+}
+
+.level-badge {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #4ECDC4;
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.upgrade-arrow {
+    font-size: 24px;
+    color: #4ECDC4;
+}
+
+.growth-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.growth-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #f0f0f0;
+}
+
+.growth-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+}
+
+.growth-info h4 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.charity-card {
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.charity-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.donation-amount {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.amount {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.currency {
+    font-size: 24px;
+}
+
+.donation-text {
+    text-align: center;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.charity-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.charity-progress .progress-text {
+    color: white;
+}
+
+.charity-progress-fill {
+    height: 8px;
+    background: #FFD166;
+    border-radius: 4px;
+}
+
+.charity-goal {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.impact-stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.impact-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.impact-item .number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.unlock-section {
+    margin-bottom: 30px;
+}
+
+.unlock-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.unlock-items {
+    display: flex;
+    justify-content: space-around;
+}
+
+.unlock-item {
+    text-align: center;
+    position: relative;
+}
+
+.unlock-icon {
+    width: 60px;
+    height: 60px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.unlock-item.locked .unlock-icon {
+    background: #f5f5f5;
+    color: #ccc;
+}
+
+.unlock-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF6B6B;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.lock-text {
+    font-size: 10px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.action-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.btn-share, .btn-continue {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-share {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-continue {
+    background: #667eea;
+    color: white;
+}
+
+/* 分享模态框 */
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.share-content {
+    background: white;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px 20px 20px;
+}
+
+.share-content h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.share-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.share-option i {
+    font-size: 32px;
+}
+
+.share-option:nth-child(1) i { color: #07C160; }
+.share-option:nth-child(2) i { color: #12B7F5; }
+.share-option:nth-child(3) i { color: #E6162D; }
+.share-option:nth-child(4) i { color: #667eea; }
+
+.btn-cancel {
+    width: 100%;
+    padding: 15px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .pet-logo {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+    }
+
+    .login-box {
+        padding: 20px;
+    }
+
+    .question-text {
+        font-size: 20px;
+    }
+
+    .nav-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .task-card {
+        padding: 20px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}

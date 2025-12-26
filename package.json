@@ -1,0 +1,47 @@
+{
+  "name": "fitpet-app",
+  "displayName": "FitPet",
+  "version": "1.0.0",
+  "description": "青少年健身与宠物养成应用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cordova build",
+    "build:android": "cordova build android",
+    "build:ios": "cordova build ios",
+    "run:android": "cordova run android",
+    "run:ios": "cordova run ios",
+    "emulate:android": "cordova emulate android",
+    "emulate:ios": "cordova emulate ios"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "fitness",
+    "pet",
+    "health",
+    "teenager"
+  ],
+  "author": "朱锦辉",
+  "license": "MIT",
+  "dependencies": {
+    "cordova-ios": "^6.2.0",
+    "cordova-plugin-splashscreen": "^6.0.0",
+    "cordova-plugin-statusbar": "^3.0.0",
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "devDependencies": {
+    "cordova": "^11.0.0",
+    "cordova-android": "^10.1.2"
+  },
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {}
+    }
+  }
+}

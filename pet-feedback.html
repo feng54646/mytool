@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPet - 宠物成长</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="feedback-page">
+<div class="container">
+    <!-- 返回按钮 -->
+    <header class="feedback-header">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <h2>任务完成！</h2>
+        <div class="placeholder"></div>
+    </header>
+
+    <!-- 庆祝动画 -->
+    <section class="celebration-section">
+        <div class="confetti-container">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+        </div>
+
+        <div class="celebration-message">
+            <h1><i class="fas fa-trophy"></i> 任务完成！</h1>
+            <p class="celebration-text">你坚持完成了今天的运动，太棒了！</p>
+        </div>
+    </section>
+
+    <!-- 宠物成长反馈 -->
+    <section class="growth-section">
+        <div class="pet-upgrade">
+            <div class="pet-before">
+                <div class="pet-avatar old">
+                    <i class="fas fa-cat"></i>
+                </div>
+                <p>任务前</p>
+            </div>
+
+            <div class="upgrade-arrow">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+
+            <div class="pet-after">
+                <div class="pet-avatar new">
+                    <i class="fas fa-cat"></i>
+                    <div class="level-badge">Lv.3</div>
+                </div>
+                <p>任务后</p>
+            </div>
+        </div>
+
+        <div class="growth-details">
+            <div class="growth-item">
+                <div class="growth-icon">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="growth-info">
+                    <h4>宠物升级！</h4>
+                    <p>小Fit从 Lv.2 升级到 Lv.3</p>
+                </div>
+            </div>
+
+            <div class="growth-item">
+                <div class="growth-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="growth-info">
+                    <h4>获得活力币</h4>
+                    <p>+10 活力币</p>
+                </div>
+            </div>
+
+            <div class="growth-item">
+                <div class="growth-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="growth-info">
+                    <h4>连续打卡</h4>
+                    <p>已连续打卡 4 天</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公益捐赠反馈 -->
+    <section class="charity-section">
+        <div class="charity-card">
+            <div class="charity-header">
+                <i class="fas fa-hands-helping"></i>
+                <h3>公益成就</h3>
+            </div>
+
+            <div class="charity-content">
+                <div class="donation-amount">
+                    <span class="amount">+0.01</span>
+                    <span class="currency">元</span>
+                </div>
+                <p class="donation-text">已自动捐赠给山区儿童体育基金</p>
+
+                <div class="charity-progress">
+                    <div class="progress-text">
+                        <span>累计捐赠</span>
+                        <span>15.41元</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="charity-progress-fill" style="width: 15%;"></div>
+                    </div>
+                    <p class="charity-goal">目标：为山区学校捐赠一套运动器材（100元）</p>
+                </div>
+
+                <div class="impact-stats">
+                    <div class="impact-item">
+                        <span class="number">23</span>
+                        <span class="label">儿童受益</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="number">5</span>
+                        <span class="label">所学校</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="number">128</span>
+                        <span class="label">次运动捐赠</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 解锁新装扮 -->
+    <section class="unlock-section">
+        <h3><i class="fas fa-gift"></i> 解锁新装扮</h3>
+
+        <div class="unlock-items">
+            <div class="unlock-item">
+                <div class="unlock-icon">
+                    <i class="fas fa-baseball-cap"></i>
+                </div>
+                <p>运动帽</p>
+                <span class="unlock-badge">新</span>
+            </div>
+
+            <div class="unlock-item">
+                <div class="unlock-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <p>篮球服</p>
+            </div>
+
+            <div class="unlock-item locked">
+                <div class="unlock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <p>运动鞋</p>
+                <span class="lock-text">Lv.5解锁</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分享与继续 -->
+    <section class="action-section">
+        <button class="btn-share" onclick="shareAchievement()">
+            <i class="fas fa-share-alt"></i> 分享成就
+        </button>
+
+        <button class="btn-continue" onclick="continueToHome()">
+            返回首页 <i class="fas fa-arrow-right"></i>
+        </button>
+    </section>
+
+    <!-- 分享模态框 -->
+    <div class="share-modal" id="shareModal" style="display: none;">
+        <div class="share-content">
+            <h3>分享到</h3>
+            <div class="share-options">
+                <button class="share-option" onclick="shareToWechat()">
+                    <i class="fab fa-weixin"></i>
+                    <span>微信</span>
+                </button>
+                <button class="share-option" onclick="shareToQQ()">
+                    <i class="fab fa-qq"></i>
+                    <span>QQ</span>
+                </button>
+                <button class="share-option" onclick="shareToWeibo()">
+                    <i class="fab fa-weibo"></i>
+                    <span>微博</span>
+                </button>
+                <button class="share-option" onclick="saveImage()">
+                    <i class="fas fa-image"></i>
+                    <span>保存图片</span>
+                </button>
+            </div>
+            <button class="btn-cancel" onclick="closeShareModal()">取消</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    // 庆祝动画
+    function createConfetti() {
+        const confettiContainer = document.querySelector('.confetti-container');
+
+        for (let i = 0; i < 20; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.backgroundColor = getRandomColor();
+            confetti.style.animationDelay = `${Math.random() * 2}s`;
+            confettiContainer.appendChild(confetti);
+        }
+    }
+
+    function getRandomColor() {
+        const colors = ['#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2', '#EF476F'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // 分享功能
+    function shareAchievement() {
+        document.getElementById('shareModal').style.display = 'flex';
+    }
+
+    function closeShareModal() {
+        document.getElementById('shareModal').style.display = 'none';
+    }
+
+    function shareToWechat() {
+        alert('已复制分享链接，请打开微信粘贴分享');
+        closeShareModal();
+    }
+
+    function shareToQQ() {
+        alert('已复制分享链接，请打开QQ粘贴分享');
+        closeShareModal();
+    }
+
+    function shareToWeibo() {
+        alert('已跳转微博分享界面');
+        closeShareModal();
+    }
+
+    function saveImage() {
+        alert('成就图片已保存到相册');
+        closeShareModal();
+    }
+
+    function continueToHome() {
+        window.location.href = 'home.html';
+    }
+
+    // 页面加载时创建庆祝效果
+    window.onload = function() {
+        createConfetti();
+
+        // 自动播放庆祝音效（模拟）
+        setTimeout(() => {
+            const celebrationText = document.querySelector('.celebration-text');
+            celebrationText.innerHTML = '小Fit因为你的坚持变得更健康了！';
+        }, 1000);
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPet - 今日任务</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="home-page">
+<div class="container">
+    <!-- 顶部状态栏 -->
+    <header class="main-header">
+        <div class="user-info">
+            <div class="avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-details">
+                <h3 id="username">青少年用户</h3>
+                <p class="user-level">初级健身者 · 第3天</p>
+            </div>
+        </div>
+
+        <div class="header-stats">
+            <div class="stat-item">
+                <i class="fas fa-fire"></i>
+                <span id="streak">3</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-coins"></i>
+                <span id="coins">45</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 宠物展示区 -->
+    <section class="pet-section">
+        <div class="pet-container">
+            <div class="pet-display" id="petDisplay">
+                <div class="pet-body">
+                    <div class="pet-head">
+                        <div class="pet-eye left"></div>
+                        <div class="pet-eye right"></div>
+                        <div class="pet-mouth"></div>
+                    </div>
+                    <div class="pet-body-main"></div>
+                    <div class="pet-accessory" id="petAccessory">
+                        <i class="fas fa-baseball-cap"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pet-info">
+                <h3>小Fit</h3>
+                <div class="pet-level">
+                    <span>Lv. <span id="petLevel">2</span></span>
+                    <div class="level-bar">
+                        <div class="level-fill" id="levelFill" style="width: 60%;"></div>
+                    </div>
+                </div>
+                <p class="pet-mood" id="petMood">状态：活力满满！</p>
+            </div>
+        </div>
+
+        <button class="pet-interact-btn" onclick="interactWithPet()">
+            <i class="fas fa-heart"></i> 抚摸宠物
+        </button>
+    </section>
+
+    <!-- 今日任务卡片 -->
+    <section class="task-section">
+        <div class="section-header">
+            <h2><i class="fas fa-tasks"></i> 今日任务</h2>
+            <span class="task-time">建议时间：早上 7:30</span>
+        </div>
+
+        <div class="task-card" id="dailyTask">
+            <div class="task-header">
+                <div class="task-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="task-details">
+                    <h3>晨间活力唤醒</h3>
+                    <p class="task-desc">3分钟拉伸运动，开启活力一天</p>
+                    <div class="task-meta">
+                        <span class="task-duration"><i class="far fa-clock"></i> 3分钟</span>
+                        <span class="task-calories"><i class="fas fa-fire"></i> 约 15 卡路里</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-progress">
+                <div class="progress-text">
+                    <span>今日进度</span>
+                    <span id="taskProgress">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="task-progress-fill" id="taskProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="task-actions">
+                <button class="btn-start" onclick="startTask()" id="startBtn">
+                    <i class="fas fa-play"></i> 开始任务
+                </button>
+                <button class="btn-skip" onclick="skipTask()">
+                    跳过今日
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 任务进行中模态框 -->
+    <div class="modal-overlay" id="taskModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>任务进行中</h3>
+                <button class="modal-close" onclick="closeTaskModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="task-timer">
+                <div class="timer-circle">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle class="timer-bg" cx="60" cy="60" r="54" fill="none" stroke="#e0e0e0" stroke-width="8"></circle>
+                        <circle class="timer-progress" cx="60" cy="60" r="54" fill="none" stroke="#4CAF50" stroke-width="8"
+                                stroke-dasharray="339.292" stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
+                    </svg>
+                    <div class="timer-text">
+                        <span id="timerMinutes">03</span>:<span id="timerSeconds">00</span>
+                    </div>
+                </div>
+
+                <div class="exercise-demo">
+                    <div class="exercise-gif"></div>
+                    <p class="exercise-name">手臂伸展运动</p>
+                </div>
+            </div>
+
+            <div class="modal-instructions">
+                <h4><i class="fas fa-lightbulb"></i> 动作要点</h4>
+                <ul>
+                    <li>保持呼吸均匀，不要憋气</li>
+                    <li>动作要缓慢，感受肌肉拉伸</li>
+                    <li>如果感到疼痛，立即停止</li>
+                </ul>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-pause" onclick="pauseTask()" id="pauseBtn">
+                    <i class="fas fa-pause"></i> 暂停
+                </button>
+                <button class="btn-complete" onclick="completeTask()" id="completeBtn" style="display: none;">
+                    <i class="fas fa-check"></i> 完成任务
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-map"></i>
+            <span>关卡</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-trophy"></i>
+            <span>成就</span>
+        </a>
+        <a href="pet-feedback.html" class="nav-item">
+            <i class="fas fa-paw"></i>
+            <span>宠物</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </a>
+    </nav>
+</div>
+
+<script src="script.js"></script>
+<script>
+    // 模拟用户数据
+    let userData = {
+        username: "青少年用户",
+        streak: 3,
+        coins: 45,
+        petLevel: 2,
+        petExp: 60,
+        petMood: "活力满满！",
+        todayTaskCompleted: false,
+        taskProgress: 0
+    };
+
+    // 更新用户界面
+    function updateUI() {
+        document.getElementById('username').textContent = userData.username;
+        document.getElementById('streak').textContent = userData.streak;
+        document.getElementById('coins').textContent = userData.coins;
+        document.getElementById('petLevel').textContent = userData.petLevel;
+        document.getElementById('levelFill').style.width = `${userData.petExp}%`;
+        document.getElementById('petMood').textContent = `状态：${userData.petMood}`;
+        document.getElementById('taskProgress').textContent = `${userData.taskProgress}%`;
+        document.getElementById('taskProgressFill').style.width = `${userData.taskProgress}%`;
+
+        // 更新任务按钮状态
+        const startBtn = document.getElementById('startBtn');
+        if (userData.taskProgress >= 100) {
+            startBtn.innerHTML = '<i class="fas fa-check"></i> 已完成';
+            startBtn.classList.add('completed');
+            startBtn.onclick = null;
+        }
+    }
+
+    // 宠物互动
+    function interactWithPet() {
+        userData.petMood = "很开心！";
+        userData.petExp = Math.min(100, userData.petExp + 5);
+
+        // 如果经验值满，升级
+        if (userData.petExp >= 100) {
+            userData.petLevel++;
+            userData.petExp = 0;
+            alert(`恭喜！小Fit升级到 ${userData.petLevel} 级！`);
+        }
+
+        updateUI();
+
+        // 宠物动画反馈
+        const petDisplay = document.getElementById('petDisplay');
+        petDisplay.classList.add('happy');
+        setTimeout(() => {
+            petDisplay.classList.remove('happy');
+        }, 1000);
+    }
+
+    // 任务相关函数
+    let timerInterval;
+    let totalSeconds = 180; // 3分钟 = 180秒
+    let remainingSeconds = totalSeconds;
+    let isPaused = false;
+
+    function startTask() {
+        if (userData.taskProgress >= 100) return;
+
+        document.getElementById('taskModal').style.display = 'flex';
+        startTimer();
+    }
+
+    function startTimer() {
+        isPaused = false;
+        document.getElementById('pauseBtn').innerHTML = '<i class="fas fa-pause"></i> 暂停';
+        document.getElementById('completeBtn').style.display = 'none';
+
+        timerInterval = setInterval(() => {
+            if (!isPaused) {
+                remainingSeconds--;
+                updateTimerDisplay();
+
+                // 更新进度条
+                const progress = ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
+                document.querySelector('.timer-progress').style.strokeDashoffset = 339.292 * (1 - progress / 100);
+
+                // 更新任务进度
+                userData.taskProgress = Math.min(100, Math.floor(progress));
+                document.getElementById('taskProgress').textContent = `${userData.taskProgress}%`;
+                document.getElementById('taskProgressFill').style.width = `${userData.taskProgress}%`;
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('completeBtn').style.display = 'block';
+                    document.getElementById('pauseBtn').style.display = 'none';
+                }
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        document.getElementById('timerMinutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('timerSeconds').textContent = seconds.toString().padStart(2, '0');
+    }
+
+    function pauseTask() {
+        isPaused = !isPaused;
+        document.getElementById('pauseBtn').innerHTML = isPaused ?
+            '<i class="fas fa-play"></i> 继续' :
+            '<i class="fas fa-pause"></i> 暂停';
+    }
+
+    function completeTask() {
+        clearInterval(timerInterval);
+        userData.taskProgress = 100;
+        userData.streak++;
+        userData.coins += 10;
+        userData.petExp = Math.min(100, userData.petExp + 20);
+        userData.todayTaskCompleted = true;
+
+        // 检查宠物是否升级
+        if (userData.petExp >= 100) {
+            userData.petLevel++;
+            userData.petExp = 0;
+        }
+
+        updateUI();
+        closeTaskModal();
+
+        // 跳转到反馈页面
+        setTimeout(() => {
+            window.location.href = 'pet-feedback.html';
+        }, 500);
+    }
+
+    function skipTask() {
+        if (confirm("确定要跳过今日任务吗？连续打卡将中断。")) {
+            userData.streak = 0;
+            updateUI();
+        }
+    }
+
+    function closeTaskModal() {
+        clearInterval(timerInterval);
+        document.getElementById('taskModal').style.display = 'none';
+        remainingSeconds = totalSeconds;
+        updateTimerDisplay();
+    }
+
+    // 页面加载时初始化
+    window.onload = function() {
+        updateUI();
+        updateTimerDisplay();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{
+  "user": {
+    "id": "user_2023102728",
+    "username": "朱锦辉",
+    "age": 18,
+    "avatar": "default",
+    "registrationDate": "2025-10-21"
+  },
+
+  "pet": {
+    "name": "小Fit",
+    "type": "cat",
+    "level": 2,
+    "exp": 60,
+    "mood": "活力满满！",
+    "accessories": [
+      {
+        "id": "cap_1",
+        "name": "运动帽",
+        "type": "headwear",
+        "unlocked": true,
+        "equipped": true
+      },
+      {
+        "id": "shirt_1",
+        "name": "篮球服",
+        "type": "clothing",
+        "unlocked": true,
+        "equipped": false
+      }
+    ]
+  },
+
+  "tasks": [
+    {
+      "id": "task_morning_001",
+      "title": "晨间活力唤醒",
+      "description": "3分钟拉伸运动，开启活力一天",
+      "duration": 180,
+      "calories": 15,
+      "difficulty": "beginner",
+      "type": "stretching",
+      "recommendedTime": "07:30"
+    },
+    {
+      "id": "task_afternoon_001",
+      "title": "午间能量补充",
+      "description": "5分钟简易瑜伽，缓解疲劳",
+      "duration": 300,
+      "calories": 25,
+      "difficulty": "beginner",
+      "type": "yoga",
+      "recommendedTime": "14:00"
+    },
+    {
+      "id": "task_evening_001",
+      "title": "晚间放松时刻",
+      "description": "4分钟呼吸练习，帮助睡眠",
+      "duration": 240,
+      "calories": 10,
+      "difficulty": "beginner",
+      "type": "breathing",
+      "recommendedTime": "21:00"
+    }
+  ],
+
+  "achievements": [
+    {
+      "id": "ach_001",
+      "title": "初次见面",
+      "description": "完成第一次运动",
+      "icon": "fas fa-handshake",
+      "unlocked": true,
+      "date": "2025-10-22"
+    },
+    {
+      "id": "ach_002",
+      "title": "坚持三天",
+      "description": "连续打卡3天",
+      "icon": "fas fa-calendar-check",
+      "unlocked": true,
+      "date": "2025-10-24"
+    },
+    {
+      "id": "ach_003",
+      "title": "宠物升级",
+      "description": "宠物升到第2级",
+      "icon": "fas fa-level-up-alt",
+      "unlocked": true,
+      "date": "2025-10-23"
+    },
+    {
+      "id": "ach_004",
+      "title": "公益使者",
+      "description": "累计捐赠超过10元",
+      "icon": "fas fa-hands-helping",
+      "unlocked": true,
+      "date": "2025-10-25"
+    }
+  ],
+
+  "donations": {
+    "total": 15.41,
+    "goal": 100,
+    "progress": 15.41,
+    "unit": "元",
+    "charityName": "山区儿童体育基金",
+    "impact": {
+      "childrenHelped": 23,
+      "schoolsSupported": 5,
+      "sportsKitsDonated": 2
+    },
+    "recentTransactions": [
+      {
+        "date": "2025-10-25",
+        "amount": 0.01,
+        "source": "晨间运动"
+      },
+      {
+        "date": "2025-10-24",
+        "amount": 0.01,
+        "source": "午间运动"
+      }
+    ]
+  },
+
+  "settings": {
+    "notifications": {
+      "morningReminder": true,
+      "waterReminder": true,
+      "breakReminder": true,
+      "sleepReminder": false
+    },
+    "privacy": {
+      "shareAchievements": true,
+      "showOnLeaderboard": true,
+      "friendVisibility": "friends_only"
+    },
+    "appearance": {
+      "theme": "light",
+      "fontSize": "medium",
+      "animationSpeed": "normal"
+    }
+  },
+
+  "leaderboard": [
+    {
+      "rank": 1,
+      "username": "运动小达人",
+      "streak": 28,
+      "totalMinutes": 420,
+      "petLevel": 7
+    },
+    {
+      "rank": 2,
+      "username": "健康大使",
+      "streak": 21,
+      "totalMinutes": 315,
+      "petLevel": 6
+    },
+    {
+      "rank": 3,
+      "username": "活力少年",
+      "streak": 15,
+      "totalMinutes": 225,
+      "petLevel": 5
+    }
+  ]
+}

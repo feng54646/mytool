@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPet - 个性化问卷</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="questionnaire-page">
+<div class="container">
+    <header class="questionnaire-header">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text">
+            <span id="currentQuestion">1</span>/<span id="totalQuestions">8</span>
+        </div>
+    </header>
+
+    <main class="questionnaire-content">
+        <div class="question-card" id="questionCard">
+            <!-- 问题将通过JS动态加载 -->
+        </div>
+
+        <div class="options-container" id="optionsContainer">
+            <!-- 选项将通过JS动态加载 -->
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-btn prev" id="prevBtn" onclick="prevQuestion()">
+                <i class="fas fa-arrow-left"></i> 上一题
+            </button>
+            <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">
+                下一题 <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="nav-btn submit" id="submitBtn" onclick="submitQuestionnaire()" style="display: none;">
+                <i class="fas fa-paper-plane"></i> 提交问卷
+            </button>
+        </div>
+    </main>
+
+    <div class="questionnaire-info">
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <p>完成问卷后，FitPet将为您生成专属的健身计划！</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    // 问卷数据
+    const questionnaireData = [
+        {
+            id: 1,
+            question: "你目前的运动频率是？",
+            options: [
+                "几乎不运动",
+                "每周1-2次",
+                "每周3-4次",
+                "每周5次以上"
+            ]
+        },
+        {
+            id: 2,
+            question: "你觉得坚持运动最大的困难是？",
+            options: [
+                "太累了，没精力",
+                "没有人一起，很无聊",
+                "不知道怎么练",
+                "没时间"
+            ]
+        },
+        {
+            id: 3,
+            question: "你喜欢哪种类型的游戏？",
+            options: [
+                "养成类（如旅行青蛙）",
+                "冒险挑战类",
+                "换装打扮类",
+                "休闲益智类"
+            ]
+        },
+        {
+            id: 4,
+            question: "如果运动可以养虚拟宠物，你会更有动力吗？",
+            options: [
+                "会的！我很喜欢宠物",
+                "有点兴趣，可以试试",
+                "一般般，看宠物设计",
+                "不太感兴趣"
+            ]
+        },
+        {
+            id: 5,
+            question: "你希望每天的运动计划是？",
+            options: [
+                "固定的，容易坚持",
+                "每天不同，有新鲜感",
+                "逐渐升级，有挑战性",
+                "根据我的状态调整"
+            ]
+        },
+        {
+            id: 6,
+            question: "你一次能接受的运动时长是？",
+            options: [
+                "3-5分钟",
+                "5-10分钟",
+                "10-15分钟",
+                "15-20分钟"
+            ]
+        },
+        {
+            id: 7,
+            question: "你更喜欢哪种界面风格？",
+            options: [
+                "可爱卡通风格",
+                "简约清新风格",
+                "科技酷炫风格",
+                "运动活力风格"
+            ]
+        },
+        {
+            id: 8,
+            question: "如果运动可以兑换公益捐赠，你会更有动力吗？",
+            options: [
+                "会的！很有意义",
+                "有点兴趣",
+                "无所谓",
+                "不太在意"
+            ]
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(questionnaireData.length).fill(null);
+
+    // 初始化问卷
+    function loadQuestion(index) {
+        const question = questionnaireData[index];
+        const questionCard = document.getElementById('questionCard');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressFill = document.getElementById('progressFill');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const totalQuestionsSpan = document.getElementById('totalQuestions');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const prevBtn = document.getElementById('prevBtn');
+
+        // 更新进度
+        const progress = ((index + 1) / questionnaireData.length) * 100;
+        progressFill.style.width = `${progress}%`;
+        currentQuestionSpan.textContent = index + 1;
+        totalQuestionsSpan.textContent = questionnaireData.length;
+
+        // 显示问题
+        questionCard.innerHTML = `
+            <div class="question-number">问题 ${index + 1}</div>
+            <h2 class="question-text">${question.question}</h2>
+        `;
+
+        // 显示选项
+        optionsContainer.innerHTML = '';
+        question.options.forEach((option, i) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = `option ${userAnswers[index] === i ? 'selected' : ''}`;
+            optionDiv.innerHTML = `
+                <div class="option-icon">${String.fromCharCode(65 + i)}</div>
+                <div class="option-text">${option}</div>
+                ${userAnswers[index] === i ? '<i class="fas fa-check check-icon"></i>' : ''}
+            `;
+            optionDiv.onclick = () => selectOption(i);
+            optionsContainer.appendChild(optionDiv);
+        });
+
+        // 更新按钮状态
+        prevBtn.style.display = index === 0 ? 'none' : 'flex';
+
+        if (index === questionnaireData.length - 1) {
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'flex';
+        } else {
+            nextBtn.style.display = 'flex';
+            submitBtn.style.display = 'none';
+        }
+
+        // 如果已回答，高亮显示
+        if (userAnswers[index] !== null) {
+            highlightSelectedOption(userAnswers[index]);
+        }
+    }
+
+    function selectOption(optionIndex) {
+        userAnswers[currentQuestionIndex] = optionIndex;
+        highlightSelectedOption(optionIndex);
+
+        // 自动跳转到下一题（除了最后一题）
+        if (currentQuestionIndex < questionnaireData.length - 1) {
+            setTimeout(() => {
+                nextQuestion();
+            }, 300);
+        }
+    }
+
+    function highlightSelectedOption(optionIndex) {
+        const options = document.querySelectorAll('.option');
+        options.forEach((option, i) => {
+            option.classList.toggle('selected', i === optionIndex);
+
+            // 添加或移除勾选图标
+            const checkIcon = option.querySelector('.check-icon');
+            if (i === optionIndex) {
+                if (!checkIcon) {
+                    const icon = document.createElement('i');
+                    icon.className = 'fas fa-check check-icon';
+                    option.appendChild(icon);
+                }
+            } else if (checkIcon) {
+                checkIcon.remove();
+            }
+        });
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < questionnaireData.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
+        }
+    }
+
+    function submitQuestionnaire() {
+        // 保存答案到本地存储
+        localStorage.setItem('fitpet_questionnaire_answers', JSON.stringify(userAnswers));
+
+        // 显示加载动画
+        document.querySelector('.questionnaire-content').innerHTML = `
+            <div class="loading-container">
+                <div class="loading-spinner">
+                    <i class="fas fa-dumbbell fa-spin"></i>
+                </div>
+                <h2>正在生成您的个性化计划...</h2>
+                <p>基于您的选择，FitPet正在为您定制专属的运动方案</p>
+                <div class="planning-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        `;
+
+        // 2秒后跳转到主页
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 2000);
+    }
+
+    // 页面加载时初始化第一题
+    window.onload = function() {
+        loadQuestion(0);
+    };
+</script>
+</body>
+</html>
